@@ -60,7 +60,7 @@ app.delete('/users/delete/:username', authToken, async(req, res) => {
     if(!user) return res.status(404).json({ message: 'User not found' });
     User.deleteOne({
             username
-        }).then((deleted) => res.status(200).json({ message: 'User has been deleted'}));
+        }).then((deleted) => res.status(200).json({ result: deleted, message: 'User has been deleted'}));
 });
 app.put('/users/update/:username', authToken, async(req, res) => {
     const username = req.params.username;
@@ -68,15 +68,14 @@ app.put('/users/update/:username', authToken, async(req, res) => {
     if(!user) return res.status(404).json({ message: 'User not found' });
     User.updateOne({
             username
-    }, {
-        $set: {
-            username: req.body.username,
-            pass: req.body.pass
-        }
-    }).then((updated) => {
-        res.status(200).json(updated)
+    }, req.body)
+    .then((updated) => {
+        res.status(200).json({ result: updated, message: `User data has been updated`})
     })
-});
+    .catch((err) => {
+        res.status(400).json(err)
+    })
+}); 
 
 // port
 const port = 3000;
