@@ -20,6 +20,7 @@ const authToken = require('./middleware/auth')
 
 // root route
 app.get('/', (req, res) => {
+    console.log(User)
     res.status(200).json({
         message: "API is working!"
     })
@@ -43,12 +44,12 @@ app.post('/login', validationSchema(loginSchema), async(req, res) => {
     if(!user) return res.status(404).json({ message: "User doesn't exist" })
     if(user.pass !== pass) return res.status(401).json({ message: `Wrong password for ${username}` });
     const token = await generateToken(user);
-
     return res.status(200).json({ message: "succesfully logged in", data: { username, pass, token }})
 })
 
 // protected route to get data of users
 app.get('/users', authToken, async(req, res) => {
+    console.log(req.user)
     const users = await User.find();
     res.status(200).json({ message: "success", data: users })
 })
