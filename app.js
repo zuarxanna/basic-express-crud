@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // db
-require('./connection/db')
+require('./connection/db');
 // const User = require('./models/user')
 
 // dotenv

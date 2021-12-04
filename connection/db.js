@@ -1,6 +1,10 @@
-const mongoose = require('mongoose')
-mongoose.connect('mongodb://127.0.0.1:27017/test', {
+const mongoose = require('mongoose');
+mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://zuarxanna:suckerhead666@zuarxanna.hesay.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+}).then(() => {
+    console.log('db connected')
+}).catch((err) => {
+    console.log(err)
 });
 
