@@ -10,5 +10,5 @@ module.exports = async(req, res) => {
     if(!passValidation) return res.status(401).json({ message: `Wrong password for ${username}` });
     const token = await generateToken(user);
     res.header('authorization',token);
-    return res.status(200).json({ message: "succesfully logged in", data: { username, pass, token }});
+    return res.status(200).json({ message: "succesfully logged in", data: { username, pass: user.pass, token }});
 }
